@@ -17,6 +17,8 @@ const alphaNum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
 const alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const lowerAlphaNum = "abcdefghijklmnopqrstuvwxyz0123456789"
 const lowerAlpha = "abcdefghijklmnopqrstuvwxyz"
+const upperAlphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+const upperAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 // use own
 var gen Generator
@@ -116,6 +118,44 @@ func LowerAlpha(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()
 	return gen.LowerAlpha(n)
+}
+
+// UpperAlphaNum returns a randomly generated []byte of length n using A-Z0-9.
+// This will panic if n < 0.
+func (g *Generator) UpperAlphaNum(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
+	id := make([]byte, 0, n)
+	for i := 0; i < n; i++ {
+		id = append(id, upperAlphaNum[g.rng.Bound(uint32(len(upperAlphaNum)))])
+	}
+	return id
+}
+
+func UpperAlphaNum(n int) []byte {
+	mu.Lock()
+	defer mu.Unlock()
+	return gen.UpperAlphaNum(n)
+}
+
+// UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
+// will panic if n < 0.
+func (g *Generator) UpperAlpha(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
+	id := make([]byte, 0, n)
+	for i := 0; i < n; i++ {
+		id = append(id, upperAlpha[g.rng.Bound(uint32(len(upperAlpha)))])
+	}
+	return id
+}
+
+func UpperAlpha(n int) []byte {
+	mu.Lock()
+	defer mu.Unlock()
+	return gen.UpperAlpha(n)
 }
 
 // seed gets a random int64 using a CSPRNG.
