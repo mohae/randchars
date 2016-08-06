@@ -124,6 +124,48 @@ func TestUpperAlpha(t *testing.T) {
 	}
 }
 
+func BenchmarkAlpha8(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.Alpha(8)
+	}
+}
+
+func BenchmarkAlphaNum8(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.AlphaNum(8)
+	}
+}
+
+func BenchmarkLowerAlpha8(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.LowerAlpha(8)
+	}
+}
+
+func BenchmarkLowerAlphaNum8(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.LowerAlphaNum(8)
+	}
+}
+
+func BenchmarkUpperAlpha8(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.UpperAlpha(8)
+	}
+}
+
+func BenchmarkUpperAlphaNum8(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.UpperAlphaNum(8)
+	}
+}
+
 func BenchmarkAlpha16(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
@@ -163,5 +205,89 @@ func BenchmarkUpperAlphaNum16(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlphaNum(16)
+	}
+}
+
+func BenchmarkAlpha32(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.Alpha(32)
+	}
+}
+
+func BenchmarkAlphaNum32(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.AlphaNum(32)
+	}
+}
+
+func BenchmarkLowerAlpha32(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.LowerAlpha(32)
+	}
+}
+
+func BenchmarkLowerAlphaNum32(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.LowerAlphaNum(32)
+	}
+}
+
+func BenchmarkUpperAlpha32(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.UpperAlpha(32)
+	}
+}
+
+func BenchmarkUpperAlphaNum32(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.UpperAlphaNum(32)
+	}
+}
+
+func BenchmarkAlpha64(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.Alpha(64)
+	}
+}
+
+func BenchmarkAlphaNum64(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.AlphaNum(64)
+	}
+}
+
+func BenchmarkLowerAlpha64(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.LowerAlpha(64)
+	}
+}
+
+func BenchmarkLowerAlphaNum64(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.LowerAlphaNum(64)
+	}
+}
+
+func BenchmarkUpperAlpha64(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.UpperAlpha(64)
+	}
+}
+
+func BenchmarkUpperAlphaNum64(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.UpperAlphaNum(64)
 	}
 }
