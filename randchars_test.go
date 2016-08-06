@@ -123,3 +123,45 @@ func TestUpperAlpha(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkAlpha16(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.Alpha(16)
+	}
+}
+
+func BenchmarkAlphaNum16(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.AlphaNum(16)
+	}
+}
+
+func BenchmarkLowerAlpha16(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.LowerAlpha(16)
+	}
+}
+
+func BenchmarkLowerAlphaNum16(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.LowerAlphaNum(16)
+	}
+}
+
+func BenchmarkUpperAlpha16(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.UpperAlpha(16)
+	}
+}
+
+func BenchmarkUpperAlphaNum16(b *testing.B) {
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.UpperAlphaNum(16)
+	}
+}
