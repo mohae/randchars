@@ -1,6 +1,7 @@
 // Package randchars generates random ASCII characters.  The set of characters
 // can be one of the following: a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z, A-Z.
 //
+//
 // Calls to the package functions are threadsafe.
 package randchars
 
@@ -28,18 +29,20 @@ func init() {
 	gen.rng.Seed(seed())
 }
 
+// Generator generates the random ASCII characters.  It contains it's own
+// PRNG.
 type Generator struct {
 	rng pcg.Rand
 }
 
-// Returns a seeded Generator.
+// Returns a seeded Generator that's ready to use.
 func NewGenerator() *Generator {
 	var g Generator
 	g.ReSeed()
 	return &g
 }
 
-// ReSeed reseeds the Generator's prng.
+// ReSeed reseeds the Generator's prng using a random seed from a CSPRNG.
 func (g *Generator) ReSeed() {
 	g.rng.Seed(seed())
 }
@@ -57,6 +60,8 @@ func (g *Generator) AlphaNum(n int) []byte {
 	return id
 }
 
+// AlphaNum returns a randomly generated []byte of length n using a-zA-Z0-9.
+// This is a thread-safe call; will panic if n < 0.
 func AlphaNum(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()
@@ -76,6 +81,8 @@ func (g *Generator) Alpha(n int) []byte {
 	return id
 }
 
+// Alpha returns a randomly generated []byte of length n using a-zA-Z.  This
+// is a thread-safe call; will panic if n < 0.
 func Alpha(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()
@@ -95,6 +102,8 @@ func (g *Generator) LowerAlphaNum(n int) []byte {
 	return id
 }
 
+// LowerAlphaNum returns a randomly generated []byte of length n using a-z0-9.
+// This is a thread-safe call; will panic if n < 0.
 func LowerAlphaNum(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()
@@ -114,6 +123,8 @@ func (g *Generator) LowerAlpha(n int) []byte {
 	return id
 }
 
+// LowerAlpha returns a randomly generated []byte of length n using a-z.  This
+// is a thread-safe call; will panic if n < 0.
 func LowerAlpha(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()
@@ -133,6 +144,8 @@ func (g *Generator) UpperAlphaNum(n int) []byte {
 	return id
 }
 
+// UpperAlphaNum returns a randomly generated []byte of length n using A-Z0-9.
+// This is a thread-safe call; will panic if n < 0.
 func UpperAlphaNum(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()
@@ -152,6 +165,8 @@ func (g *Generator) UpperAlpha(n int) []byte {
 	return id
 }
 
+// UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
+// is a thread-safe call; will panic if n < 0.
 func UpperAlpha(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()
