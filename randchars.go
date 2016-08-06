@@ -1,6 +1,6 @@
-// Package randchars generates random ASCII characters.  The set of characters
-// can be one of the following: a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z, A-Z.
-//
+// Package randchars quickly generates a chunk of random ASCII characters.
+// The set of characters can be one of the following: a-zA-Z0-9, a-z0-9,
+// A-Z0-9, a-zA-Z, a-z, and A-Z.
 //
 // Calls to the package functions are threadsafe.
 package randchars
