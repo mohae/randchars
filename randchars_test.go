@@ -6,7 +6,7 @@ import (
 
 func TestAlphaNum(t *testing.T) {
 	g := NewGenerator()
-	g.rng.Seed(0)
+	g.Seed(0)
 	tests := []struct {
 		n        int
 		expected string
@@ -26,7 +26,7 @@ func TestAlphaNum(t *testing.T) {
 
 func TestAlpha(t *testing.T) {
 	g := NewGenerator()
-	g.rng.Seed(0)
+	g.Seed(0)
 	tests := []struct {
 		n        int
 		expected string
@@ -46,7 +46,7 @@ func TestAlpha(t *testing.T) {
 
 func TestLowerAlphaNum(t *testing.T) {
 	g := NewGenerator()
-	g.rng.Seed(0)
+	g.Seed(0)
 	tests := []struct {
 		n        int
 		expected string
@@ -66,7 +66,7 @@ func TestLowerAlphaNum(t *testing.T) {
 
 func TestLowerAlpha(t *testing.T) {
 	g := NewGenerator()
-	g.rng.Seed(0)
+	g.Seed(0)
 	tests := []struct {
 		n        int
 		expected string
@@ -86,7 +86,7 @@ func TestLowerAlpha(t *testing.T) {
 
 func TestUpperAlphaNum(t *testing.T) {
 	g := NewGenerator()
-	g.rng.Seed(0)
+	g.Seed(0)
 	tests := []struct {
 		n        int
 		expected string
@@ -106,7 +106,7 @@ func TestUpperAlphaNum(t *testing.T) {
 
 func TestUpperAlpha(t *testing.T) {
 	g := NewGenerator()
-	g.rng.Seed(0)
+	g.Seed(0)
 	tests := []struct {
 		n        int
 		expected string

@@ -22,11 +22,11 @@ const upperAlphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 const upperAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 // use own
-var gen Generator
+var gen *Generator
 var mu sync.Mutex
 
 func init() {
-	gen.rng.Seed(seed())
+	gen = NewGenerator()
 }
 
 // Generator generates the random ASCII characters.  It contains it's own
@@ -37,14 +37,43 @@ type Generator struct {
 
 // Returns a seeded Generator that's ready to use.
 func NewGenerator() *Generator {
-	var g Generator
-	g.ReSeed()
-	return &g
+	return &Generator{pcg.New(Int64(), 0)}
 }
 
-// ReSeed reseeds the Generator's prng using a random seed from a CSPRNG.
+// Seed seeds the Generator's prng.
+func (g *Generator) Seed(n int64) {
+	g.rng.Seed(n)
+}
+
+// Seed seeds the Generator's prng.
+func Seed(n int64) {
+	mu.Lock()
+	gen.Seed(n)
+	mu.Unlock()
+}
+
+// SeedWithState seeds the Generator's prng and set's its state.
+func (g *Generator) SeedWithState(seed, state int64) {
+	g.rng.SeedWithState(seed, state)
+}
+
+// SeedWithState seeds the Generator's prng and set's its state.
+func SeedWithState(seed, state int64) {
+	mu.Lock()
+	gen.SeedWithState(seed, state)
+	mu.Unlock()
+}
+
+// ReSeed seeds the Generator's prng using a value obtained from a CSPRNG.
 func (g *Generator) ReSeed() {
-	g.rng.Seed(seed())
+	g.rng.Seed(Int64())
+}
+
+// ReSeed seeds the Generator's prng using a value obtained from a CSPRNG.
+func ReSeed() {
+	mu.Lock()
+	gen.ReSeed()
+	mu.Unlock()
 }
 
 // AlphaNum returns a randomly generated []byte of length n using a-zA-Z0-9.
@@ -173,8 +202,8 @@ func UpperAlpha(n int) []byte {
 	return gen.UpperAlpha(n)
 }
 
-// seed gets a random int64 using a CSPRNG.
-func seed() int64 {
+// Int64 gets an int64 value from a CSPRNG.
+func Int64() int64 {
 	bi := big.NewInt(1<<63 - 1)
 	r, err := rand.Int(rand.Reader, bi)
 	if err != nil {
