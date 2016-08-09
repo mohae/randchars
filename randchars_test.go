@@ -124,170 +124,218 @@ func TestUpperAlpha(t *testing.T) {
 	}
 }
 
-func BenchmarkAlpha8(b *testing.B) {
+func TestASCII64(t *testing.T) {
+	g := NewGen64()
+	g.Seed(0)
+	tests := []struct {
+		n        int
+		expected string
+	}{
+		{0, ""},
+		{2, "J6"},
+		{4, "v8RG"},
+		{10, "qQc0t5T5AQ"},
+	}
+	for _, test := range tests {
+		b := g.Bytes(test.n)
+		if string(b) != test.expected {
+			t.Errorf("got %q; want %q", string(b), test.expected)
+		}
+	}
+}
+
+func BenchmarkAlpha_8(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.Alpha(8)
 	}
 }
 
-func BenchmarkAlphaNum8(b *testing.B) {
+func BenchmarkAlphaNum_8(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.AlphaNum(8)
 	}
 }
 
-func BenchmarkLowerAlpha8(b *testing.B) {
+func BenchmarkLowerAlpha_8(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.LowerAlpha(8)
 	}
 }
 
-func BenchmarkLowerAlphaNum8(b *testing.B) {
+func BenchmarkLowerAlphaNum_8(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.LowerAlphaNum(8)
 	}
 }
 
-func BenchmarkUpperAlpha8(b *testing.B) {
+func BenchmarkUpperAlpha_8(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlpha(8)
 	}
 }
 
-func BenchmarkUpperAlphaNum8(b *testing.B) {
+func BenchmarkUpperAlphaNum_8(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlphaNum(8)
 	}
 }
 
-func BenchmarkAlpha16(b *testing.B) {
+func BenchmarkASCII64_8(b *testing.B) {
+	g := NewGen64()
+	for i := 0; i < b.N; i++ {
+		g.Bytes(8)
+	}
+}
+
+func BenchmarkAlpha_16(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.Alpha(16)
 	}
 }
 
-func BenchmarkAlphaNum16(b *testing.B) {
+func BenchmarkAlphaNum_16(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.AlphaNum(16)
 	}
 }
 
-func BenchmarkLowerAlpha16(b *testing.B) {
+func BenchmarkLowerAlpha_16(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.LowerAlpha(16)
 	}
 }
 
-func BenchmarkLowerAlphaNum16(b *testing.B) {
+func BenchmarkLowerAlphaNum_16(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.LowerAlphaNum(16)
 	}
 }
 
-func BenchmarkUpperAlpha16(b *testing.B) {
+func BenchmarkUpperAlpha_16(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlpha(16)
 	}
 }
 
-func BenchmarkUpperAlphaNum16(b *testing.B) {
+func BenchmarkUpperAlphaNum_16(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlphaNum(16)
 	}
 }
 
-func BenchmarkAlpha32(b *testing.B) {
+func BenchmarkASCII64_16(b *testing.B) {
+	g := NewGen64()
+	for i := 0; i < b.N; i++ {
+		g.Bytes(16)
+	}
+}
+
+func BenchmarkAlpha_32(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.Alpha(32)
 	}
 }
 
-func BenchmarkAlphaNum32(b *testing.B) {
+func BenchmarkAlphaNum_32(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.AlphaNum(32)
 	}
 }
 
-func BenchmarkLowerAlpha32(b *testing.B) {
+func BenchmarkLowerAlpha_32(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.LowerAlpha(32)
 	}
 }
 
-func BenchmarkLowerAlphaNum32(b *testing.B) {
+func BenchmarkLowerAlphaNum_32(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.LowerAlphaNum(32)
 	}
 }
 
-func BenchmarkUpperAlpha32(b *testing.B) {
+func BenchmarkUpperAlpha_32(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlpha(32)
 	}
 }
 
-func BenchmarkUpperAlphaNum32(b *testing.B) {
+func BenchmarkUpperAlphaNum_32(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlphaNum(32)
 	}
 }
 
-func BenchmarkAlpha64(b *testing.B) {
+func BenchmarkASCII64_32(b *testing.B) {
+	g := NewGen64()
+	for i := 0; i < b.N; i++ {
+		g.Bytes(32)
+	}
+}
+
+func BenchmarkAlpha_64(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.Alpha(64)
 	}
 }
 
-func BenchmarkAlphaNum64(b *testing.B) {
+func BenchmarkAlphaNum_64(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.AlphaNum(64)
 	}
 }
 
-func BenchmarkLowerAlpha64(b *testing.B) {
+func BenchmarkLowerAlpha_64(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.LowerAlpha(64)
 	}
 }
 
-func BenchmarkLowerAlphaNum64(b *testing.B) {
+func BenchmarkLowerAlphaNum_64(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.LowerAlphaNum(64)
 	}
 }
 
-func BenchmarkUpperAlpha64(b *testing.B) {
+func BenchmarkUpperAlpha_64(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlpha(64)
 	}
 }
 
-func BenchmarkUpperAlphaNum64(b *testing.B) {
+func BenchmarkUpperAlphaNum_64(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
 		g.UpperAlphaNum(64)
+	}
+}
+
+func BenchmarkASCII64_64(b *testing.B) {
+	g := NewGen64()
+	for i := 0; i < b.N; i++ {
+		g.Bytes(64)
 	}
 }
