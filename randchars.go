@@ -40,6 +40,17 @@ func NewGenerator() *Generator {
 	return &Generator{pcg.New(Int64(), 0)}
 }
 
+// NewGeneratorWithSeed a Generator using the received value as its seed.
+func NewGeneratorWithSeed(seed int64) *Generator {
+	return &Generator{pcg.New(seed, 0)}
+}
+
+// NewGeneratorSeedWithState a Generator using the received values as its seed
+// and state.
+func NewGeneratorSeedWithState(seed, state int64) *Generator {
+	return &Generator{pcg.New(seed, state)}
+}
+
 // Seed seeds the Generator's prng.
 func (g *Generator) Seed(n int64) {
 	g.rng.Seed(n)
