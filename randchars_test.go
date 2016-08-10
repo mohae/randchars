@@ -1,6 +1,8 @@
 package randchars
 
 import (
+	"fmt"
+	mrand "math/rand"
 	"testing"
 )
 
@@ -144,6 +146,12 @@ func TestASCII64(t *testing.T) {
 	}
 }
 
+func BenchmarkMathRand_8(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		MathRand(8)
+	}
+}
+
 func BenchmarkAlpha_8(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
@@ -190,6 +198,12 @@ func BenchmarkASCII64_8(b *testing.B) {
 	g := NewGen64()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(8)
+	}
+}
+
+func BenchmarkMathRand_16(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		MathRand(16)
 	}
 }
 
@@ -242,6 +256,12 @@ func BenchmarkASCII64_16(b *testing.B) {
 	}
 }
 
+func BenchmarkMathRand_32(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		MathRand(32)
+	}
+}
+
 func BenchmarkAlpha_32(b *testing.B) {
 	g := NewGenerator()
 	for i := 0; i < b.N; i++ {
@@ -288,6 +308,12 @@ func BenchmarkASCII64_32(b *testing.B) {
 	g := NewGen64()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(32)
+	}
+}
+
+func BenchmarkMathRand_64(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		MathRand(64)
 	}
 }
 
@@ -338,4 +364,15 @@ func BenchmarkASCII64_64(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		g.Bytes(64)
 	}
+}
+
+func MathRand(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
+	id := make([]byte, 0, n)
+	for i := 0; i < n; i++ {
+		id = append(id, alphaNum[mrand.Int31n(int32(len(alphaNum)))])
+	}
+	return id
 }
