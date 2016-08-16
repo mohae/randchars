@@ -139,6 +139,62 @@ func (g *Generator) ASCII64(n int) []byte {
 	return b
 }
 
+// AlphaNum returns a randomly generated []byte of length n using a-zA-Z0-9.
+// This is a thread-safe call; will panic if n < 0.
+func AlphaNum(n int) []byte {
+	genMu.Lock()
+	defer genMu.Unlock()
+	return gen.AlphaNum(n)
+}
+
+// Alpha returns a randomly generated []byte of length n using a-zA-Z.  This
+// is a thread-safe call; will panic if n < 0.
+func Alpha(n int) []byte {
+	genMu.Lock()
+	defer genMu.Unlock()
+	return gen.Alpha(n)
+}
+
+// LowerAlphaNum returns a randomly generated []byte of length n using a-z0-9.
+// This is a thread-safe call; will panic if n < 0.
+func LowerAlphaNum(n int) []byte {
+	genMu.Lock()
+	defer genMu.Unlock()
+	return gen.LowerAlphaNum(n)
+}
+
+// LowerAlpha returns a randomly generated []byte of length n using a-z.  This
+// is a thread-safe call; will panic if n < 0.
+func LowerAlpha(n int) []byte {
+	genMu.Lock()
+	defer genMu.Unlock()
+	return gen.LowerAlpha(n)
+}
+
+// UpperAlphaNum returns a randomly generated []byte of length n using A-Z0-9.
+// This is a thread-safe call; will panic if n < 0.
+func UpperAlphaNum(n int) []byte {
+	genMu.Lock()
+	defer genMu.Unlock()
+	return gen.UpperAlphaNum(n)
+}
+
+// UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
+// is a thread-safe call; will panic if n < 0.
+func UpperAlpha(n int) []byte {
+	genMu.Lock()
+	defer genMu.Unlock()
+	return gen.UpperAlpha(n)
+}
+
+// ASCII64 returns a series of randomly generated ASCII64 bytes with the
+// requested length.  This is a thread-safe call; will panic if n < 0.
+func ASCII64(n int) []byte {
+	genMu.Lock()
+	defer genMu.Unlock()
+	return gen.ASCII64(n)
+}
+
 // read fills the cache.
 func (g *Generator) read() {
 	_, err := rand.Read(g.cache)
