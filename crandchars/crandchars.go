@@ -48,6 +48,8 @@ func NewGenerator(n int) *Generator {
 	return &g
 }
 
+// AlphaNum returns a randomly generated []byte of length n using a-zA-Z0-9.
+// This will panic if n < 0.
 func (g *Generator) AlphaNum(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -59,6 +61,8 @@ func (g *Generator) AlphaNum(n int) []byte {
 	return b
 }
 
+// Alpha returns a randomly generated []byte of length n using a-zA-Z.  This
+// will panic if n < 0.
 func (g *Generator) Alpha(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -70,6 +74,8 @@ func (g *Generator) Alpha(n int) []byte {
 	return b
 }
 
+// LowerAlphaNum returns a randomly generated []byte of length n using a-z0-9.
+// This will panic if n < 0.
 func (g *Generator) LowerAlphaNum(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -81,6 +87,8 @@ func (g *Generator) LowerAlphaNum(n int) []byte {
 	return b
 }
 
+// LowerAlpha returns a randomly generated []byte of length n using a-z.  This
+// will panic if n < 0
 func (g *Generator) LowerAlpha(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -92,6 +100,8 @@ func (g *Generator) LowerAlpha(n int) []byte {
 	return b
 }
 
+// UpperAlphaNum returns a randomly generated []byte of length n using A-Z0-9.
+// This will panic if n < 0.
 func (g *Generator) UpperAlphaNum(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -103,6 +113,8 @@ func (g *Generator) UpperAlphaNum(n int) []byte {
 	return b
 }
 
+// UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
+// will panic if n < 0.
 func (g *Generator) UpperAlpha(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -114,6 +126,8 @@ func (g *Generator) UpperAlpha(n int) []byte {
 	return b
 }
 
+// ASCII64 returns a series of randomly generated ASCII64 bytes with the
+// requested length.   This will panic if n < 0.
 func (g *Generator) ASCII64(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
