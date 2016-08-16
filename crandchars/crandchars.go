@@ -1,12 +1,13 @@
 // Package crandchars generates a chunk of random ASCII characters using a
 // CSPRNG.  The supported ranges are: a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z,
-// A-Z, and a-zA-Z0-9=_.
+// A-Z, and a-zA-Z0-9=_ (ASCII64).
 //
 // Calls to the package functions are threadsafe.
 package crandchars
 
 import (
 	"crypto/rand"
+	"fmt"
 	"sync"
 )
 
@@ -40,7 +41,7 @@ func New() *Generator {
 	return NewGenerator(CacheSize)
 }
 
-// NewGenerator returns a generator with a cache of n bytes.
+// NewGenerator returns a generator with a cache of n random bytes.
 func NewGenerator(n int) *Generator {
 	g := Generator{cache: make([]byte, n), cacheSize: n}
 	g.read()
@@ -48,6 +49,9 @@ func NewGenerator(n int) *Generator {
 }
 
 func (g *Generator) AlphaNum(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
 		b[i] = alphaNum[g.intN(uint8(len(alphaNum)))]
@@ -56,6 +60,9 @@ func (g *Generator) AlphaNum(n int) []byte {
 }
 
 func (g *Generator) Alpha(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
 		b[i] = alpha[g.intN(uint8(len(alpha)))]
@@ -64,6 +71,9 @@ func (g *Generator) Alpha(n int) []byte {
 }
 
 func (g *Generator) LowerAlphaNum(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
 		b[i] = lowerAlphaNum[g.intN(uint8(len(lowerAlphaNum)))]
@@ -72,6 +82,9 @@ func (g *Generator) LowerAlphaNum(n int) []byte {
 }
 
 func (g *Generator) LowerAlpha(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
 		b[i] = lowerAlpha[g.intN(uint8(len(lowerAlpha)))]
@@ -80,6 +93,9 @@ func (g *Generator) LowerAlpha(n int) []byte {
 }
 
 func (g *Generator) UpperAlphaNum(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
 		b[i] = upperAlphaNum[g.intN(uint8(len(upperAlphaNum)))]
@@ -88,6 +104,9 @@ func (g *Generator) UpperAlphaNum(n int) []byte {
 }
 
 func (g *Generator) UpperAlpha(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
 		b[i] = upperAlpha[g.intN(uint8(len(upperAlpha)))]
@@ -96,6 +115,9 @@ func (g *Generator) UpperAlpha(n int) []byte {
 }
 
 func (g *Generator) ASCII64(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
 		b[i] = upperAlpha[g.intN(uint8(len(upperAlpha)))]
