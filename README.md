@@ -1,7 +1,7 @@
 # randchars
 [![GoDoc](https://godoc.org/github.com/mohae/randchars?status.svg)](https://godoc.org/github.com/mohae/randchars)[![Build Status](https://travis-ci.org/mohae/randchars.png)](https://travis-ci.org/mohae/randchars)
 
-Fast, `Generator`, and faster, `Gen64`, random ASCII character generation.  There are both PRNG and CSPRNG based implementations.  For convenience, package level globals are provided.  These package globals are safe for concurrent use.
+Fast random ASCII character generation.  There are both PRNG and CSPRNG based implementations.  For convenience, package level globals are provided.  These package globals are safe for concurrent use.
 
 ## PRNG
 To use the PRNG based random character generation:
