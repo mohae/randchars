@@ -16,7 +16,7 @@ Generator quickly generates random characters of an arbitrary length with the fo
 Generator uses a RNG that implements [PCG](http://www.pcg-random.org) written by Damian Gryski: [go-pcgr](https://github.com/dgryski/go-pcgr)
 
 ### Gen64
-Gen64 generates random characters of an arbitrary length using a 64 character set: `a-z`, `A-Z`, `0-9`, `=`, and `_`.  This is ~20% faster than using Generator.
+Gen64 generates random characters of an arbitrary length using , and Base 64 as shown in [Table 1 of RFC 3638](https://tools.ietf.org/html/rfc4648).
 
 Gen64 uses a RNG that implements [XORoShiRo128+](http://xoroshiro.di.unimi.it/) written by Damian Gryski: [go-xoroshiro](https://github.com/dgryski/go-xoroshiro)
 
@@ -31,6 +31,8 @@ To use the CSPRNG based random character generation:
 This version uses the stdlib's `crypto/rand` package.  The `Generator` caches a number of random bytes.  The cache is refilled whenever it is exhausted.  This speeds up the process of generating random characters.  If a local `Generator` is being used, the cache size can be specified by using the `NewGenerator()` func.
 
 For convenience, a thread-safe package level `Generator` is provided.
+
+This supports of the character set ranges supported by `randchars.Generator` an `randchars.Base64`.
 
 ## License
 MIT Licensed.  See the LICENSE file.
