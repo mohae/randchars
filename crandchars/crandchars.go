@@ -1,6 +1,6 @@
 // Package crandchars generates a chunk of random ASCII characters using a
 // CSPRNG.  The supported ranges are: a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z,
-// A-Z, and a-zA-Z0-9=_ (ASCII64).
+// A-Z, and Base 64 as defined in Table 1 of RFC 4648.
 //
 // Calls to the package functions are threadsafe.
 package crandchars
@@ -18,7 +18,7 @@ const (
 	lowerAlpha    = "abcdefghijklmnopqrstuvwxyz"
 	upperAlphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	upperAlpha    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	ascii64       = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789=_"
+	base64        = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/"
 	CacheSize     = 4096 // The number of random bytes to cache.
 )
 
@@ -126,9 +126,9 @@ func (g *Generator) UpperAlpha(n int) []byte {
 	return b
 }
 
-// ASCII64 returns a series of randomly generated ASCII64 bytes with the
+// Base64 returns a series of randomly generated Base64 bytes with the
 // requested length.   This will panic if n < 0.
-func (g *Generator) ASCII64(n int) []byte {
+func (g *Generator) Base64(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
 	}
@@ -140,7 +140,7 @@ func (g *Generator) ASCII64(n int) []byte {
 }
 
 // AlphaNum returns a randomly generated []byte of length n using a-zA-Z0-9.
-// This is a thread-safe call; will panic if n < 0.
+// This will panic if n < 0.
 func AlphaNum(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
@@ -148,7 +148,7 @@ func AlphaNum(n int) []byte {
 }
 
 // Alpha returns a randomly generated []byte of length n using a-zA-Z.  This
-// is a thread-safe call; will panic if n < 0.
+// will panic if n < 0.
 func Alpha(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
@@ -156,7 +156,7 @@ func Alpha(n int) []byte {
 }
 
 // LowerAlphaNum returns a randomly generated []byte of length n using a-z0-9.
-// This is a thread-safe call; will panic if n < 0.
+// This will panic if n < 0.
 func LowerAlphaNum(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
@@ -164,7 +164,7 @@ func LowerAlphaNum(n int) []byte {
 }
 
 // LowerAlpha returns a randomly generated []byte of length n using a-z.  This
-// is a thread-safe call; will panic if n < 0.
+// will panic if n < 0.
 func LowerAlpha(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
@@ -172,7 +172,7 @@ func LowerAlpha(n int) []byte {
 }
 
 // UpperAlphaNum returns a randomly generated []byte of length n using A-Z0-9.
-// This is a thread-safe call; will panic if n < 0.
+// This will panic if n < 0.
 func UpperAlphaNum(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
@@ -180,19 +180,19 @@ func UpperAlphaNum(n int) []byte {
 }
 
 // UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
-// is a thread-safe call; will panic if n < 0.
+// will panic if n < 0.
 func UpperAlpha(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
 	return gen.UpperAlpha(n)
 }
 
-// ASCII64 returns a series of randomly generated ASCII64 bytes with the
-// requested length.  This is a thread-safe call; will panic if n < 0.
-func ASCII64(n int) []byte {
+// Base64 returns a series of randomly generated Base 64 bytes with the
+// requested length.  This will panic if n < 0.
+func Base64(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
-	return gen.ASCII64(n)
+	return gen.Base64(n)
 }
 
 // read fills the cache.

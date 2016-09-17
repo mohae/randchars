@@ -39,10 +39,10 @@ func BenchmarkUpperAlphaNum_8(b *testing.B) {
 	}
 }
 
-func BenchmarkASCII64_8(b *testing.B) {
+func BenchmarkBase64_8(b *testing.B) {
 	g := New()
 	for i := 0; i < b.N; i++ {
-		g.ASCII64(8)
+		g.Base64(8)
 	}
 }
 
@@ -88,10 +88,10 @@ func BenchmarkUpperAlphaNum_16(b *testing.B) {
 	}
 }
 
-func BenchmarkASCII64_16(b *testing.B) {
+func BenchmarkBase64_16(b *testing.B) {
 	g := New()
 	for i := 0; i < b.N; i++ {
-		g.ASCII64(16)
+		g.Base64(16)
 	}
 }
 
@@ -137,10 +137,10 @@ func BenchmarkUpperAlphaNum_32(b *testing.B) {
 	}
 }
 
-func BenchmarkASCII64_32(b *testing.B) {
+func BenchmarkBase64_32(b *testing.B) {
 	g := New()
 	for i := 0; i < b.N; i++ {
-		g.ASCII64(32)
+		g.Base64(32)
 	}
 }
 
@@ -186,9 +186,9 @@ func BenchmarkUpperAlphaNum_64(b *testing.B) {
 	}
 }
 
-func BenchmarkASCII64_64(b *testing.B) {
+func BenchmarkBase64_64(b *testing.B) {
 	g := New()
 	for i := 0; i < b.N; i++ {
-		g.ASCII64(64)
+		g.Base64(64)
 	}
 }

@@ -126,8 +126,8 @@ func TestUpperAlpha(t *testing.T) {
 	}
 }
 
-func TestASCII64(t *testing.T) {
-	g := NewGen64()
+func TestBase64(t *testing.T) {
+	g := NewBase64()
 	g.Seed(0)
 	tests := []struct {
 		n        int
@@ -194,8 +194,8 @@ func BenchmarkUpperAlphaNum_8(b *testing.B) {
 	}
 }
 
-func BenchmarkASCII64_8(b *testing.B) {
-	g := NewGen64()
+func BenchmarkBase64_8(b *testing.B) {
+	g := NewBase64()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(8)
 	}
@@ -249,8 +249,8 @@ func BenchmarkUpperAlphaNum_16(b *testing.B) {
 	}
 }
 
-func BenchmarkASCII64_16(b *testing.B) {
-	g := NewGen64()
+func BenchmarkBase64_16(b *testing.B) {
+	g := NewBase64()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(16)
 	}
@@ -304,8 +304,8 @@ func BenchmarkUpperAlphaNum_32(b *testing.B) {
 	}
 }
 
-func BenchmarkASCII64_32(b *testing.B) {
-	g := NewGen64()
+func BenchmarkBase64_32(b *testing.B) {
+	g := NewBase64()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(32)
 	}
@@ -359,8 +359,8 @@ func BenchmarkUpperAlphaNum_64(b *testing.B) {
 	}
 }
 
-func BenchmarkASCII64_64(b *testing.B) {
-	g := NewGen64()
+func BenchmarkBase64_64(b *testing.B) {
+	g := NewBase64()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(64)
 	}
