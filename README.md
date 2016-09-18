@@ -15,10 +15,10 @@ Generator quickly generates random characters of an arbitrary length with the fo
 
 Generator uses a RNG that implements [PCG](http://www.pcg-random.org) written by Damian Gryski: [go-pcgr](https://github.com/dgryski/go-pcgr)
 
-### Gen64
-Gen64 generates random characters of an arbitrary length using , and Base 64 as shown in [Table 1 of RFC 3638](https://tools.ietf.org/html/rfc4648).
+### Base64
+Base64 generates random characters of an arbitrary length using the base 64 alphabet as shown in [Table 1 of RFC 4648](https://tools.ietf.org/html/rfc4648).
 
-Gen64 uses a RNG that implements [XORoShiRo128+](http://xoroshiro.di.unimi.it/) written by Damian Gryski: [go-xoroshiro](https://github.com/dgryski/go-xoroshiro)
+Base64 uses a RNG that implements [XORoShiRo128+](http://xoroshiro.di.unimi.it/) written by Damian Gryski: [go-xoroshiro](https://github.com/dgryski/go-xoroshiro)
 
 
 ## CSPRNG
@@ -32,7 +32,7 @@ This version uses the stdlib's `crypto/rand` package.  The `Generator` caches a 
 
 For convenience, a thread-safe package level `Generator` is provided.
 
-This supports of the character set ranges supported by `randchars.Generator` an `randchars.Base64`.
+This supports of the character set ranges supported by `randchars.Generator` and `randchars.Base64`.
 
 ## License
 MIT Licensed.  See the LICENSE file.
