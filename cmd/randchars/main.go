@@ -1,5 +1,5 @@
 // Copyright © 2014, All rights reserved
-// Joel Scoble, https://github.com/mohae/clitpl
+// Joel Scoble, https://github.com/mohae
 //
 // This is licensed under The MIT License. Please refer to the included
 // LICENSE file for more information. If the LICENSE file has not been
@@ -18,6 +18,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -26,15 +27,20 @@ import (
 )
 
 var (
+	name  = filepath.Base(os.Args[0])
 	c     bool
 	out   = "stdout"
 	chars = "base64"
+	help  bool
 )
 
 func init() {
+	flag.Usage = usage
 	flag.StringVar(&out, "-o", out, "output destination")
 	flag.StringVar(&chars, "chars", chars, "charset: alphanum, alpha, lalphanum, lalpha, ualphanum, ualpha, base64")
 	flag.BoolVar(&c, "c", false, "use a CSPRNG")
+	flag.BoolVar(&help, "h", false, "help")
+	flag.BoolVar(&help, "help", false, "help")
 }
 
 func main() {
@@ -43,9 +49,17 @@ func main() {
 
 func realMain() int {
 	flag.Parse()
+	if help {
+		flag.Usage()
+		fmt.Fprint(os.Stderr, "Flags:\n")
+		fmt.Fprint(os.Stderr, "\n")
+		flag.PrintDefaults()
+		return 0
+	}
+
 	args := flag.Args()
 	if len(args) == 0 {
-		fmt.Fprintln(os.Stderr, "at least 1 number equal to the number of random characters you wish to have generated must be passed")
+		flag.Usage()
 		return 1
 	}
 	l := make([]int, len(args))
@@ -135,4 +149,14 @@ func NewGenerator(n int, c bool, chars string) (*Generator, error) {
 		return nil, fmt.Errorf("%q is not supported", chars)
 	}
 	return &g, nil
+}
+
+func usage() {
+	fmt.Fprintf(os.Stderr, "Usage of %s:\n", name)
+	fmt.Fprintf(os.Stderr, "    %s <int>...\n", name)
+	fmt.Fprint(os.Stderr, "\n")
+	fmt.Fprint(os.Stderr, "  help:\n")
+	fmt.Fprintf(os.Stderr, "    %s -h\n", name)
+	fmt.Fprintf(os.Stderr, "    %s --help\n", name)
+	fmt.Fprint(os.Stderr, "\n")
 }
