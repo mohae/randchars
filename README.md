@@ -11,15 +11,14 @@ To use the PRNG based random character generation:
 The PRNGs are seeded using a random value obtained from `crypto/rand`.  The PRNGs can be re-seeded, either using a user supplied value or with a value obtained from `crypto/rand`.
 
 ### Generator
-Generator quickly generates random characters of an arbitrary length with the following character set options: `a-zA-Z0-9`, `a-zA-Z`, `a-z0-9`, `a-z`, `A-Z0-9`, and `A-Z`.
+Generator quickly generates random characters of an arbitrary length with the following character set options: `a-zA-Z0-9`, `a-zA-Z`, `a-z0-9`, `a-z`, `A-Z0-9`, `A-Z`, and [Base64](https://tools.ietf.org/html/rfc4648).
 
 Generator uses a RNG that implements [PCG](http://www.pcg-random.org) written by Damian Gryski: [go-pcgr](https://github.com/dgryski/go-pcgr)
 
-### Base64
-Base64 generates random characters of an arbitrary length using the base 64 alphabet as shown in [Table 1 of RFC 4648](https://tools.ietf.org/html/rfc4648).
+This fulfills the `Generatorer` interface.
 
-Base64 uses a RNG that implements [XORoShiRo128+](http://xoroshiro.di.unimi.it/) written by Damian Gryski: [go-xoroshiro](https://github.com/dgryski/go-xoroshiro)
-
+### Base64Generator
+The Base64Generator generates random characters of an arbitrary length using the base 64 alphabet as shown in [Table 1 of RFC 4648](https://tools.ietf.org/html/rfc4648) and uses a PRNG that implements [XORoShiRo128+](http://xoroshiro.di.unimi.it/) written by Damian Gryski: [go-xoroshiro](https://github.com/dgryski/go-xoroshiro). This generator is slightly faster than using `Generator.Base64()` and existed before `Generator` had a `Base64` method, which was added to `Generator` so it could fulfill the `Generatorer` interface.
 
 ## CSPRNG
 For use-cases that require a CSPRNG, a CSPRNG based implementation is provided.
@@ -32,7 +31,7 @@ This version uses the stdlib's `crypto/rand` package.  The `Generator` caches a 
 
 For convenience, a thread-safe package level `Generator` is provided.
 
-This supports of the character set ranges supported by `randchars.Generator` and `randchars.Base64`.
+The CSPRNg Generator implements the `randchars.Generatorer` interface.
 
 ## License
 MIT Licensed.  See the LICENSE file.
