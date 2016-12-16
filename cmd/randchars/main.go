@@ -34,7 +34,7 @@ var (
 func init() {
 	flag.StringVar(&out, "-o", out, "output destination")
 	flag.StringVar(&chars, "chars", chars, "charset: alphanum, alpha, lalphanum, lalpha, ualphanum, ualpha, base64")
-	flag.BoolVar(&c, "-c", false, "use a CSPRNG")
+	flag.BoolVar(&c, "c", false, "use a CSPRNG")
 }
 
 func main() {
