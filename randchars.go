@@ -44,6 +44,17 @@ func init() {
 	genBase64 = NewBase64()
 }
 
+// Generatorer is an interface for generators.
+type Generatorer interface {
+	AlphaNum(n int) []byte
+	Alpha(n int) []byte
+	LowerAlphaNum(n int) []byte
+	LowerAlpha(n int) []byte
+	UpperAlphaNum(n int) []byte
+	UpperAlpha(n int) []byte
+	Base64(n int) []byte
+}
+
 // Generator generates the random ASCII characters.  It relies on a PRNG that
 // implements PCG: www.pcg-random.org.
 type Generator struct {
