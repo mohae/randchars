@@ -127,7 +127,27 @@ func TestUpperAlpha(t *testing.T) {
 }
 
 func TestBase64(t *testing.T) {
-	g := NewBase64()
+	g := NewGenerator()
+	g.Seed(0)
+	tests := []struct {
+		n        int
+		expected string
+	}{
+		{0, ""},
+		{2, "iw"},
+		{4, "7Gmw"},
+		{10, "TUjnz7CKdu"},
+	}
+	for _, test := range tests {
+		b := g.Base64(test.n)
+		if string(b) != test.expected {
+			t.Errorf("got %q; want %q", string(b), test.expected)
+		}
+	}
+}
+
+func TestBase64XORoShiro(t *testing.T) {
+	g := NewBase64Generator()
 	g.Seed(0)
 	tests := []struct {
 		n        int
@@ -195,7 +215,14 @@ func BenchmarkUpperAlphaNum_8(b *testing.B) {
 }
 
 func BenchmarkBase64_8(b *testing.B) {
-	g := NewBase64()
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.Base64(8)
+	}
+}
+
+func BenchmarkBase64XORoShiro_8(b *testing.B) {
+	g := NewBase64Generator()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(8)
 	}
@@ -250,7 +277,14 @@ func BenchmarkUpperAlphaNum_16(b *testing.B) {
 }
 
 func BenchmarkBase64_16(b *testing.B) {
-	g := NewBase64()
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.Base64(16)
+	}
+}
+
+func BenchmarkBase64XORoShiro_16(b *testing.B) {
+	g := NewBase64Generator()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(16)
 	}
@@ -305,7 +339,14 @@ func BenchmarkUpperAlphaNum_32(b *testing.B) {
 }
 
 func BenchmarkBase64_32(b *testing.B) {
-	g := NewBase64()
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.Base64(32)
+	}
+}
+
+func BenchmarkBase64XORoShiro_32(b *testing.B) {
+	g := NewBase64Generator()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(32)
 	}
@@ -360,7 +401,14 @@ func BenchmarkUpperAlphaNum_64(b *testing.B) {
 }
 
 func BenchmarkBase64_64(b *testing.B) {
-	g := NewBase64()
+	g := NewGenerator()
+	for i := 0; i < b.N; i++ {
+		g.Base64(64)
+	}
+}
+
+func BenchmarkBase64XORoShiro_64(b *testing.B) {
+	g := NewBase64Generator()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(64)
 	}

@@ -36,12 +36,12 @@ var gen *Generator
 var mu sync.Mutex
 
 // for base64 stuff
-var genBase64 *Base64
+var genBase64 *Base64Generator
 var mu64 sync.Mutex
 
 func init() {
 	gen = NewGenerator()
-	genBase64 = NewBase64()
+	genBase64 = NewBase64Generator()
 }
 
 // Generatorer is an interface for generators.
@@ -170,6 +170,19 @@ func (g *Generator) UpperAlpha(n int) []byte {
 	return id
 }
 
+// Base64 returns a series of randomly generated Base64 bytes with the
+// requested length. This will panic if n < 0.
+func (g *Generator) Base64(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
+	b := make([]byte, n)
+	for i := 0; i < n; i++ {
+		b[i] = base64[g.rng.Bound(uint32(len(base64)))]
+	}
+	return b
+}
+
 // Seed seeds the Generator's prng.
 func Seed(n int64) {
 	mu.Lock()
@@ -239,36 +252,47 @@ func UpperAlpha(n int) []byte {
 	return gen.UpperAlpha(n)
 }
 
+// Base64 returns a randomly generated []byte of length n using base64.  This
+// will panic if n < 0.
+func Base64(n int) []byte {
+	mu.Lock()
+	defer mu.Unlock()
+	return gen.Base64(n)
+}
+
 // Base64 supports the Base 64 Alphabet as shown in Table 1 of RFC 4248.  This
 // uses an implementation of the XORoShiRo128+ PRNG:
 // http://xoroshiro.di.unimi.it/.
-type Base64 struct {
+//
+// This is more performant than the other Generator that this package offers.
+type Base64Generator struct {
 	rng xoro.State
 }
 
-// NewBase64 returns an initialized Base64 that is ready to use.  The seed
-// value used is an int64 obtrained from a CSPRNG.
-func NewBase64() *Base64 {
-	return &Base64{xoro.New(Int64())}
+// NewBase64 returns an initialized Base64Generator that is ready to use. The
+// seed value used is an int64 obtrained from a CSPRNG.
+func NewBase64Generator() *Base64Generator {
+	return &Base64Generator{xoro.New(Int64())}
 }
 
-// NewBase64WithSeed a Base64 Generator using the received value as its seed.
-func NewBase64WithSeed(seed int64) *Base64 {
-	return &Base64{xoro.New(seed)}
+// NewBase64GeneratorWithSeed a Base64Generator using the received value as
+// its seed.
+func NewBase64GeneratorWithSeed(seed int64) *Base64Generator {
+	return &Base64Generator{xoro.New(seed)}
 }
 
-// Seed seeds Base64's prng using the provided value.
-func (g *Base64) Seed(n int64) {
+// Seed seeds Base64Generator's prng using the provided value.
+func (g *Base64Generator) Seed(n int64) {
 	g.rng.Seed(n)
 }
 
-// ReSeed seeds Base64's prng using a value obtained from a CSPRNG.
-func (g *Base64) ReSeed() {
+// ReSeed seeds Base64Generator's prng using a value obtained from a CSPRNG.
+func (g *Base64Generator) ReSeed() {
 	g.rng.Seed(Int64())
 }
 
 // Bytes returns n randomly generated Base 64 bytes.
-func (g *Base64) Bytes(n int) []byte {
+func (g *Base64Generator) Bytes(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
 	}
@@ -279,14 +303,14 @@ func (g *Base64) Bytes(n int) []byte {
 	return id
 }
 
-// Seed seeds Base64's prng using the provided value.
+// Seed seeds Base64Generator's prng using the provided value.
 func Seed64(n int64) {
 	mu64.Lock()
 	genBase64.Seed(n)
 	mu64.Unlock()
 }
 
-// ReSeed seeds Base64's prng using a value obtained from a CSPRNG.
+// ReSeed seeds Base64Generator's prng using a value obtained from a CSPRNG.
 func ReSeed64() {
 	mu64.Lock()
 	genBase64.ReSeed()
