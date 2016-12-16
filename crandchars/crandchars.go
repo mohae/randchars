@@ -127,14 +127,14 @@ func (g *Generator) UpperAlpha(n int) []byte {
 }
 
 // Base64 returns a series of randomly generated Base64 bytes with the
-// requested length.   This will panic if n < 0.
+// requested length. This will panic if n < 0.
 func (g *Generator) Base64(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
 	}
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
-		b[i] = upperAlpha[g.intN(uint8(len(upperAlpha)))]
+		b[i] = base64[g.intN(uint8(len(base64)))]
 	}
 	return b
 }
