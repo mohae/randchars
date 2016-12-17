@@ -31,7 +31,7 @@ This version uses the stdlib's `crypto/rand` package.  The `Generator` caches a 
 
 For convenience, a thread-safe package level `Generator` is provided.
 
-The CSPRNg Generator implements the `randchars.Generatorer` interface.
+The CSPRNG Generator implements the `randchars.Generatorer` interface.
 
 ## License
 MIT Licensed.  See the LICENSE file.
