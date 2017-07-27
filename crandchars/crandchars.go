@@ -202,11 +202,19 @@ func UpperAlpha(n int) []byte {
 }
 
 // Base64 returns a series of randomly generated Base 64 bytes with the
-// requested length.  This will panic if n < 0.
+// requested length. This will panic if n < 0.
 func Base64(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
 	return gen.Base64(n)
+}
+
+// Base64URL returns a series of randomly generated Base64URL bytes with the
+// requested length. This will panic if n < 0.
+func Base64URL(n int) []byte {
+	genMu.Lock()
+	defer genMu.Unlock()
+	return gen.Base64URL(n)
 }
 
 // read fills the cache.
