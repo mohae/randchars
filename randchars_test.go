@@ -146,6 +146,26 @@ func TestBase64(t *testing.T) {
 	}
 }
 
+func TestBase64URL(t *testing.T) {
+	g := NewGenerator()
+	g.Seed(0)
+	tests := []struct {
+		n        int
+		expected string
+	}{
+		{0, ""},
+		{2, "iw"},
+		{4, "7Gmw"},
+		{10, "TUjnz7CKdu"},
+	}
+	for _, test := range tests {
+		b := g.Base64URL(test.n)
+		if string(b) != test.expected {
+			t.Errorf("got %q; want %q", string(b), test.expected)
+		}
+	}
+}
+
 func TestBase64XORoShiro(t *testing.T) {
 	g := NewBase64Generator()
 	g.Seed(0)

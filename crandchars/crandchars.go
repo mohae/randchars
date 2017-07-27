@@ -1,5 +1,5 @@
 // Package crandchars generates a chunk of random ASCII characters using a
-// CSPRNG.  The supported ranges are: a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z,
+// CSPRNG. The supported ranges are: a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z,
 // A-Z, and Base 64 as defined in Table 1 of RFC 4648.
 //
 // Calls to the package functions are threadsafe.
@@ -19,6 +19,7 @@ const (
 	upperAlphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	upperAlpha    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	base64        = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/"
+	base64URL     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 	CacheSize     = 4096 // The number of random bytes to cache.
 )
 
@@ -61,7 +62,7 @@ func (g *Generator) AlphaNum(n int) []byte {
 	return b
 }
 
-// Alpha returns a randomly generated []byte of length n using a-zA-Z.  This
+// Alpha returns a randomly generated []byte of length n using a-zA-Z. This
 // will panic if n < 0.
 func (g *Generator) Alpha(n int) []byte {
 	if n < 0 {
@@ -87,7 +88,7 @@ func (g *Generator) LowerAlphaNum(n int) []byte {
 	return b
 }
 
-// LowerAlpha returns a randomly generated []byte of length n using a-z.  This
+// LowerAlpha returns a randomly generated []byte of length n using a-z. This
 // will panic if n < 0
 func (g *Generator) LowerAlpha(n int) []byte {
 	if n < 0 {
@@ -113,7 +114,7 @@ func (g *Generator) UpperAlphaNum(n int) []byte {
 	return b
 }
 
-// UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
+// UpperAlpha returns a randomly generated []byte of length n using A-Z. This
 // will panic if n < 0.
 func (g *Generator) UpperAlpha(n int) []byte {
 	if n < 0 {
@@ -139,6 +140,19 @@ func (g *Generator) Base64(n int) []byte {
 	return b
 }
 
+// Base64URL returns a series of randomly generated URL and Filename safe
+// Base64 bytes with the requested length. This will panic if n < 0.
+func (g *Generator) Base64URL(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
+	b := make([]byte, n)
+	for i := 0; i < n; i++ {
+		b[i] = base64URL[g.intN(uint8(len(base64)))]
+	}
+	return b
+}
+
 // AlphaNum returns a randomly generated []byte of length n using a-zA-Z0-9.
 // This will panic if n < 0.
 func AlphaNum(n int) []byte {
@@ -147,7 +161,7 @@ func AlphaNum(n int) []byte {
 	return gen.AlphaNum(n)
 }
 
-// Alpha returns a randomly generated []byte of length n using a-zA-Z.  This
+// Alpha returns a randomly generated []byte of length n using a-zA-Z. This
 // will panic if n < 0.
 func Alpha(n int) []byte {
 	genMu.Lock()
@@ -163,7 +177,7 @@ func LowerAlphaNum(n int) []byte {
 	return gen.LowerAlphaNum(n)
 }
 
-// LowerAlpha returns a randomly generated []byte of length n using a-z.  This
+// LowerAlpha returns a randomly generated []byte of length n using a-z. This
 // will panic if n < 0.
 func LowerAlpha(n int) []byte {
 	genMu.Lock()
@@ -179,7 +193,7 @@ func UpperAlphaNum(n int) []byte {
 	return gen.UpperAlphaNum(n)
 }
 
-// UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
+// UpperAlpha returns a randomly generated []byte of length n using A-Z. This
 // will panic if n < 0.
 func UpperAlpha(n int) []byte {
 	genMu.Lock()

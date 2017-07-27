@@ -29,6 +29,7 @@ const (
 	upperAlphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	upperAlpha    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	base64        = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/"
+	base64URL     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 )
 
 // use own
@@ -53,6 +54,7 @@ type Generatorer interface {
 	UpperAlphaNum(n int) []byte
 	UpperAlpha(n int) []byte
 	Base64(n int) []byte
+	Base64URL(n int) []byte
 }
 
 // Generator generates the random ASCII characters.  It relies on a PRNG that
@@ -105,7 +107,7 @@ func (g *Generator) AlphaNum(n int) []byte {
 	return id
 }
 
-// Alpha returns a randomly generated []byte of length n using a-zA-Z.  This
+// Alpha returns a randomly generated []byte of length n using a-zA-Z. This
 // will panic if n < 0.
 func (g *Generator) Alpha(n int) []byte {
 	if n < 0 {
@@ -131,7 +133,7 @@ func (g *Generator) LowerAlphaNum(n int) []byte {
 	return id
 }
 
-// LowerAlpha returns a randomly generated []byte of length n using a-z.  This
+// LowerAlpha returns a randomly generated []byte of length n using a-z. This
 // will panic if n < 0.
 func (g *Generator) LowerAlpha(n int) []byte {
 	if n < 0 {
@@ -157,7 +159,7 @@ func (g *Generator) UpperAlphaNum(n int) []byte {
 	return id
 }
 
-// UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
+// UpperAlpha returns a randomly generated []byte of length n using A-Z. This
 // will panic if n < 0.
 func (g *Generator) UpperAlpha(n int) []byte {
 	if n < 0 {
@@ -179,6 +181,19 @@ func (g *Generator) Base64(n int) []byte {
 	b := make([]byte, n)
 	for i := 0; i < n; i++ {
 		b[i] = base64[g.rng.Bound(uint32(len(base64)))]
+	}
+	return b
+}
+
+// Base64URL returns a series of randomly generated url and filename safe
+// Base64 bytes with the requested length. This will panic if n < 0.
+func (g *Generator) Base64URL(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
+	b := make([]byte, n)
+	for i := 0; i < n; i++ {
+		b[i] = base64URL[g.rng.Bound(uint32(len(base64URL)))]
 	}
 	return b
 }
@@ -212,7 +227,7 @@ func AlphaNum(n int) []byte {
 	return gen.AlphaNum(n)
 }
 
-// Alpha returns a randomly generated []byte of length n using a-zA-Z.  This
+// Alpha returns a randomly generated []byte of length n using a-zA-Z. This
 // will panic if n < 0.
 func Alpha(n int) []byte {
 	mu.Lock()
@@ -228,7 +243,7 @@ func LowerAlphaNum(n int) []byte {
 	return gen.LowerAlphaNum(n)
 }
 
-// LowerAlpha returns a randomly generated []byte of length n using a-z.  This
+// LowerAlpha returns a randomly generated []byte of length n using a-z. This
 // will panic if n < 0.
 func LowerAlpha(n int) []byte {
 	mu.Lock()
@@ -244,7 +259,7 @@ func UpperAlphaNum(n int) []byte {
 	return gen.UpperAlphaNum(n)
 }
 
-// UpperAlpha returns a randomly generated []byte of length n using A-Z.  This
+// UpperAlpha returns a randomly generated []byte of length n using A-Z. This
 // will panic if n < 0.
 func UpperAlpha(n int) []byte {
 	mu.Lock()
@@ -252,7 +267,7 @@ func UpperAlpha(n int) []byte {
 	return gen.UpperAlpha(n)
 }
 
-// Base64 returns a randomly generated []byte of length n using base64.  This
+// Base64 returns a randomly generated []byte of length n using base64. This
 // will panic if n < 0.
 func Base64(n int) []byte {
 	mu.Lock()
@@ -260,7 +275,15 @@ func Base64(n int) []byte {
 	return gen.Base64(n)
 }
 
-// Base64 supports the Base 64 Alphabet as shown in Table 1 of RFC 4248.  This
+// Base64 returns a randomly generated []byte of length n using url and
+// filename safe base64. This will panic if n < 0.
+func Base64URL(n int) []byte {
+	mu.Lock()
+	defer mu.Unlock()
+	return gen.Base64URL(n)
+}
+
+// Base64 supports the Base 64 Alphabet as shown in Table 1 of RFC 4248. This
 // uses an implementation of the XORoShiRo128+ PRNG:
 // http://xoroshiro.di.unimi.it/.
 //
