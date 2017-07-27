@@ -41,6 +41,10 @@ var mu sync.Mutex
 var genBase64 *Base64Generator
 var mu64 sync.Mutex
 
+// for base64url stuff
+var genBase64URL *Base64URLGenerator
+var mu64URL sync.Mutex
+
 func init() {
 	gen = NewGenerator()
 	genBase64 = NewBase64Generator()
@@ -289,13 +293,13 @@ func Base64URL(n int) []byte {
 // uses an implementation of the XORoShiRo128+ PRNG:
 // http://xoroshiro.di.unimi.it/.
 //
-// This is more performant than the other Generator that this package offers.
+// This is more performant than using Generator for base64.
 type Base64Generator struct {
 	rng xoro.State
 }
 
 // NewBase64 returns an initialized Base64Generator that is ready to use. The
-// seed value used is an int64 obtrained from a CSPRNG.
+// seed value used is an int64 obtained from a CSPRNG.
 func NewBase64Generator() *Base64Generator {
 	return &Base64Generator{xoro.New(Int64())}
 }
@@ -335,7 +339,8 @@ func SeedBase64(n int64) {
 	mu64.Unlock()
 }
 
-// ReseedBase64 seeds Base64Generator's prng using a value obtained from a CSPRNG.
+// ReseedBase64 seeds Base64Generator's prng using a value obtained from a
+// CSPRNG.
 func ReseedBase64() {
 	mu64.Lock()
 	genBase64.Reseed()
@@ -347,6 +352,71 @@ func Base64Bytes(n int) []byte {
 	mu64.Lock()
 	defer mu64.Unlock()
 	return genBase64.Bytes(n)
+}
+
+// Base64URL supports the Base64URL Alphabet as shown in Table 2 of RFC 4248.
+// This uses an implementation of the XORoShiRo128+ PRNG:
+// http://xoroshiro.di.unimi.it/.
+//
+// This is more performant than using Generator for base64url.
+type Base64URLGenerator struct {
+	rng xoro.State
+}
+
+// NewBase64URL returns an initialized Base64GeneratorURL that is ready to use.
+// The seed value used is an int64 obtained from a CSPRNG.
+func NewBase64URLGenerator() *Base64URLGenerator {
+	return &Base64URLGenerator{xoro.New(Int64())}
+}
+
+// NewBase64URLGeneratorWithSeed a Base64GeneratorURL using the received value
+// as its seed.
+func NewBase64URLGeneratorWithSeed(seed int64) *Base64URLGenerator {
+	return &Base64URLGenerator{xoro.New(seed)}
+}
+
+// Seed seeds Base64URLGenerator's prng using the provided value.
+func (g *Base64URLGenerator) Seed(n int64) {
+	g.rng.Seed(n)
+}
+
+// Reseed seeds Base64URLGenerator's prng using a value obtained from a CSPRNG.
+func (g *Base64URLGenerator) Reseed() {
+	g.rng.Seed(Int64())
+}
+
+// Bytes returns n randomly generated Base64URL bytes.
+func (g *Base64URLGenerator) Bytes(n int) []byte {
+	if n < 0 {
+		panic(fmt.Sprintf("%d: value out of bounds", n))
+	}
+	id := make([]byte, 0, n)
+	for i := 0; i < n; i++ {
+		id = append(id, base64[g.rng.Int63n(int64(64))])
+	}
+	return id
+}
+
+// SeedBase64URL seeds Base64URLGenerator's prng using the provided value.
+func SeedBase64URL(n int64) {
+	mu64URL.Lock()
+	genBase64URL.Seed(n)
+	mu64URL.Unlock()
+}
+
+// ReseedBase64URL seeds Base64URLGenerator's prng using a value obtained from
+// a CSPRNG.
+func ReseedBase64URL() {
+	mu64URL.Lock()
+	genBase64URL.Reseed()
+	mu64URL.Unlock()
+}
+
+// Base64URLBytes returns n randomly generated Base64URL bytes.
+func Base64URLBytes(n int) []byte {
+	mu64URL.Lock()
+	defer mu64URL.Unlock()
+	return genBase64URL.Bytes(n)
 }
 
 // Int64 gets an int64 value from a CSPRNG.

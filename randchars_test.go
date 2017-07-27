@@ -264,6 +264,14 @@ func BenchmarkBase64XORoShiro_8(b *testing.B) {
 	}
 }
 
+func BenchmarkBase64URLXORoShiro_8(b *testing.B) {
+	g := NewBase64URLGenerator()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.Bytes(8)
+	}
+}
+
 func BenchmarkMathRand_16(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		MathRand(16)
@@ -420,6 +428,14 @@ func BenchmarkBase64XORoShiro_32(b *testing.B) {
 	}
 }
 
+func BenchmarkBase64URLXORoShiro_32(b *testing.B) {
+	g := NewBase64URLGenerator()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.Bytes(32)
+	}
+}
+
 func BenchmarkMathRand_64(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		MathRand(64)
@@ -492,6 +508,14 @@ func BenchmarkBase64URL_64(b *testing.B) {
 
 func BenchmarkBase64XORoShiro_64(b *testing.B) {
 	g := NewBase64Generator()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.Bytes(64)
+	}
+}
+
+func BenchmarkBase64URLXORoShiro_64(b *testing.B) {
+	g := NewBase64URLGenerator()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		g.Bytes(64)
