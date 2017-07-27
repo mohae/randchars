@@ -311,8 +311,8 @@ func (g *Base64Generator) Seed(n int64) {
 	g.rng.Seed(n)
 }
 
-// ReSeed seeds Base64Generator's prng using a value obtained from a CSPRNG.
-func (g *Base64Generator) ReSeed() {
+// Reseed seeds Base64Generator's prng using a value obtained from a CSPRNG.
+func (g *Base64Generator) Reseed() {
 	g.rng.Seed(Int64())
 }
 
@@ -335,10 +335,10 @@ func SeedBase64(n int64) {
 	mu64.Unlock()
 }
 
-// ReSeedBase64 seeds Base64Generator's prng using a value obtained from a CSPRNG.
-func ReSeedBase64() {
+// ReseedBase64 seeds Base64Generator's prng using a value obtained from a CSPRNG.
+func ReseedBase64() {
 	mu64.Lock()
-	genBase64.ReSeed()
+	genBase64.Reseed()
 	mu64.Unlock()
 }
 
