@@ -1,14 +1,15 @@
 // Package randchars quickly generates a chunk of random ASCII characters
-// using a PRNG.  Two different generators are provide: Generator and
-// Base64.
+// using a PRNG. Two different generators are provide: Generator and Base64.
 //
 // Generator provides more flexibility in the set of characters used:
-// a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z, and A-Z.
+// a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z, A-Z, Base64, as defined in Table 1
+// of RFC 4648, and Base64URL, as defined in Table 2 of RFC 4648.
 //
-// Base64 generates a chunk of Base 64 random characters.  The character set
+// Base64 generates a chunk of Base 64 random characters. The character set
 // used is from Table 1 of RFC 4648.
 //
-// Calls to the package functions use a package global and are threadsafe.
+// Calls to the package functions using the package global genarator are
+// threadsafe.
 package randchars
 
 import (
@@ -172,8 +173,8 @@ func (g *Generator) UpperAlpha(n int) []byte {
 	return id
 }
 
-// Base64 returns a series of randomly generated Base64 bytes with the
-// requested length. This will panic if n < 0.
+// Base64 returns a randomly generated []byte of length n using Base64, as
+// defined in Table 1 of RFC 4648. This will panic if n < 0.
 func (g *Generator) Base64(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -185,8 +186,8 @@ func (g *Generator) Base64(n int) []byte {
 	return b
 }
 
-// Base64URL returns a series of randomly generated url and filename safe
-// Base64 bytes with the requested length. This will panic if n < 0.
+// Base64URL returns a randomly generated []byte of length n using Base64URL,
+// as defined in Table 2 of RFC 4648. This will panic if n < 0.
 func (g *Generator) Base64URL(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -267,16 +268,17 @@ func UpperAlpha(n int) []byte {
 	return gen.UpperAlpha(n)
 }
 
-// Base64 returns a randomly generated []byte of length n using base64. This
-// will panic if n < 0.
+// Base64 returns a randomly generated []byte of length n using base64, as
+// defined in Table 1 of RFC 4648. This will panic if n < 0.
 func Base64(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()
 	return gen.Base64(n)
 }
 
-// Base64 returns a randomly generated []byte of length n using url and
-// filename safe base64. This will panic if n < 0.
+// Base64URL returns a randomly generated []byte of length n using base64url,
+// as defined in Table 2 of RFC 4648 filename safe base64. This will panic if
+// n < 0.
 func Base64URL(n int) []byte {
 	mu.Lock()
 	defer mu.Unlock()

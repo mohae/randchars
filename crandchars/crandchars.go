@@ -1,8 +1,10 @@
 // Package crandchars generates a chunk of random ASCII characters using a
 // CSPRNG. The supported ranges are: a-zA-Z0-9, a-z0-9, A-Z0-9, a-zA-Z, a-z,
-// A-Z, and Base 64 as defined in Table 1 of RFC 4648.
+// A-Z, Base64, as defined in Table 1 of RFC 4648, and Base64URL, as defined in
+// Table 2 of RFC 4648.
 //
-// Calls to the package functions are threadsafe.
+// Calls to the package functions using the package global generator are
+// threadsafe.
 package crandchars
 
 import (
@@ -127,8 +129,8 @@ func (g *Generator) UpperAlpha(n int) []byte {
 	return b
 }
 
-// Base64 returns a series of randomly generated Base64 bytes with the
-// requested length. This will panic if n < 0.
+// Base64 returns a randomly generated []byte of length n using Base64, as
+// defined in Table 2 of RFC 4648. This will panic if n < 0.
 func (g *Generator) Base64(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -140,8 +142,8 @@ func (g *Generator) Base64(n int) []byte {
 	return b
 }
 
-// Base64URL returns a series of randomly generated URL and Filename safe
-// Base64 bytes with the requested length. This will panic if n < 0.
+// Base64URL returns a randomly generated []byte of length n using Base64URL,
+// as defined in Table 2 of RFC 4648. This will panic if n < 0.
 func (g *Generator) Base64URL(n int) []byte {
 	if n < 0 {
 		panic(fmt.Sprintf("%d: value out of bounds", n))
@@ -201,16 +203,16 @@ func UpperAlpha(n int) []byte {
 	return gen.UpperAlpha(n)
 }
 
-// Base64 returns a series of randomly generated Base 64 bytes with the
-// requested length. This will panic if n < 0.
+// Base64 returns a randomly generated []byte of length n using Base64, as
+// defined in Table 2 of RFC 4648. This will panic if n < 0.
 func Base64(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
 	return gen.Base64(n)
 }
 
-// Base64URL returns a series of randomly generated Base64URL bytes with the
-// requested length. This will panic if n < 0.
+// Base64URL returns a randomly generated []byte of length n using Base64URL,
+// as defined in Table 2 of RFC 4648. This will panic if n < 0.
 func Base64URL(n int) []byte {
 	genMu.Lock()
 	defer genMu.Unlock()
