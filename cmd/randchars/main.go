@@ -37,7 +37,7 @@ var (
 func init() {
 	flag.Usage = usage
 	flag.StringVar(&out, "-o", out, "output destination")
-	flag.StringVar(&chars, "chars", chars, "charset: alphanum, alpha, lalphanum, lalpha, ualphanum, ualpha, base64")
+	flag.StringVar(&chars, "chars", chars, "charset: alphanum, alpha, lalphanum, lalpha, ualphanum, ualpha, base64, base64url")
 	flag.BoolVar(&c, "c", false, "use a CSPRNG")
 	flag.BoolVar(&help, "h", false, "help")
 	flag.BoolVar(&help, "help", false, "help")
@@ -145,6 +145,8 @@ func NewGenerator(n int, c bool, chars string) (*Generator, error) {
 		g.GetChars = g.Gen.UpperAlpha
 	case "base64":
 		g.GetChars = g.Gen.Base64
+	case "base64url":
+		g.GetChars = g.Gen.Base64URL
 	default:
 		return nil, fmt.Errorf("%q is not supported", chars)
 	}
