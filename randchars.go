@@ -328,22 +328,22 @@ func (g *Base64Generator) Bytes(n int) []byte {
 	return id
 }
 
-// Seed seeds Base64Generator's prng using the provided value.
-func Seed64(n int64) {
+// SeedBase64 seeds Base64Generator's prng using the provided value.
+func SeedBase64(n int64) {
 	mu64.Lock()
 	genBase64.Seed(n)
 	mu64.Unlock()
 }
 
-// ReSeed seeds Base64Generator's prng using a value obtained from a CSPRNG.
-func ReSeed64() {
+// ReSeedBase64 seeds Base64Generator's prng using a value obtained from a CSPRNG.
+func ReSeedBase64() {
 	mu64.Lock()
 	genBase64.ReSeed()
 	mu64.Unlock()
 }
 
-// Bytes returns n randomly generated Base 64 bytes.
-func Bytes(n int) []byte {
+// Base64Bytes returns n randomly generated Base 64 bytes.
+func Base64Bytes(n int) []byte {
 	mu64.Lock()
 	defer mu64.Unlock()
 	return genBase64.Bytes(n)
