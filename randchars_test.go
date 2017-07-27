@@ -248,6 +248,14 @@ func BenchmarkBase64_8(b *testing.B) {
 	}
 }
 
+func BenchmarkBase64URL_8(b *testing.B) {
+	g := NewGenerator()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.Base64URL(8)
+	}
+}
+
 func BenchmarkBase64XORoShiro_8(b *testing.B) {
 	g := NewBase64Generator()
 	b.ResetTimer()
@@ -315,6 +323,14 @@ func BenchmarkBase64_16(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		g.Base64(16)
+	}
+}
+
+func BenchmarkBase64URL_16(b *testing.B) {
+	g := NewGenerator()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.Base64URL(16)
 	}
 }
 
@@ -388,6 +404,14 @@ func BenchmarkBase64_32(b *testing.B) {
 	}
 }
 
+func BenchmarkBase64URL_32(b *testing.B) {
+	g := NewGenerator()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.Base64URL(32)
+	}
+}
+
 func BenchmarkBase64XORoShiro_32(b *testing.B) {
 	g := NewBase64Generator()
 	b.ResetTimer()
@@ -455,6 +479,14 @@ func BenchmarkBase64_64(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		g.Base64(64)
+	}
+}
+
+func BenchmarkBase64URL_64(b *testing.B) {
+	g := NewGenerator()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		g.Base64URL(64)
 	}
 }
 
