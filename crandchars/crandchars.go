@@ -22,7 +22,10 @@ const (
 	upperAlpha    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	base64        = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/"
 	base64URL     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
-	CacheSize     = 4096 // The number of random bytes to cache.
+	// The default cache size for random bytes. This is the maximum number of bytes
+	// that linux's getrandom() guarantees to return without being interrupted by
+	// signals.
+	CacheSize = 256
 )
 
 var gen *Generator
